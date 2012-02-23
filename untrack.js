@@ -4,7 +4,9 @@ window.addEventListener("load", function() {
 	fixLinks({relatedNode: document});
 
 	for (var i = 0; i < containers.length; ++i) {
-		document.getElementById(containers[i]).addEventListener("DOMNodeInserted", fixLinks);
+		var node = document.getElementById(containers[i]);
+		node.addEventListener("DOMNodeInserted", fixLinks);
+		fixLinks({relatedNode: node});
 	}
 
 	containers = undefined;

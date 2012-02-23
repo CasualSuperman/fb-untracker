@@ -1,6 +1,6 @@
 {
 	"name": "Facebook Untracker",
-	"version": "1.1",
+	"version": "1.2",
 	"description": "Disables Facebook's outbound link tracking.",
 	"icons": {
 		"16": "icon_16.webp",

@@ -1,10 +1,3 @@
-function toArr(collection) {
-	var list = [];
-	for (var i = 0, len = collection.length; i < len; ++i) {
-		list[i] = collection[i];
-	}
-	return list;
-}
 var old_length = 0;
 var container = document.getElementById("home_stream");
 var selector = "a[onmousedown^='UntrustedLink.bootstrap']";
@@ -24,10 +17,9 @@ function fixLinks() {
 
 	// Process the links.
 	var aList = document.querySelectorAll(selector);
-	var elems = toArr(aList);
-	elems.forEach(function(elem) {
-		elem.onmousedown = undefined;
-	});
+	for (var i = 0, len = aList.length; i < len; ++i) {
+		aList[i].onmousedown = undefined;
+	}
 
 	// Run again soon.
 	delayFixLinks();

@@ -1,6 +1,8 @@
 var containers = ["contentCol", "fbDockChatTabs"];
 
 window.addEventListener("load", function() {
+	fixLinks({relatedNode: document});
+
 	for (var i = 0; i < containers.length; ++i) {
 		document.getElementById(containers[i]).addEventListener("DOMNodeInserted", fixLinks);
 	}

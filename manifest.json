@@ -1,6 +1,6 @@
 {
 	"name": "Facebook Untracker",
-	"version": "2.1",
+	"version": "2.2",
 	"description": "Disables Facebook's outbound link tracking.",
 	"update_url": "https://github.com/tobias104/fb-untracker/raw/master/updates.xml",
 	"icons": {

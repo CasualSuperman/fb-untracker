@@ -18,7 +18,7 @@ function fixLinks() {
 	// Process the links.
 	var aList = document.querySelectorAll(selector);
 	for (var i = 0, len = aList.length; i < len; ++i) {
-		aList[i].onmousedown = undefined;
+		aList[i].removeAttribute('onmousedown');
 	}
 
 	// Run again soon.

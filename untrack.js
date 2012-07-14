@@ -12,13 +12,13 @@ window.addEventListener("load", function() {
 	containers = undefined;
 }, false);
 
-var selector = "a[onmousedown^='UntrustedLink.bootstrap']";
+var selector = "a[onmousedown^='UntrustedLink']";
 
 function fixLinks(e) {
 	var aList = e.relatedNode.querySelectorAll(selector);
-	for (var i = 0, len = aList.length; i < len; ++i) {
-		aList[i].removeAttribute('onmousedown');
-	}
+	Array.prototype.slice.call(aList, 0).forEach(function(elem) {
+		elem.onmousedown = null;
+	});
 }
 
 fixLinks({relatedNode: document});

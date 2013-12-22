@@ -1,24 +1,45 @@
-var containers = ["contentCol", "fbDockChatTabs"];
+function filterLinks(nodes) {
+	Array.prototype.forEach.call(nodes, function(node) {
+		if (node.nodeType !== 1) return;
+		var links = node.querySelectorAll("a[target='_blank']");
+		Array.prototype.forEach.call(links, function(link) {
+			var newLink = link.cloneNode(true);
+			var className = newLink.className;
 
-window.addEventListener("load", function() {
-	fixLinks({relatedNode: document});
+			while (newLink.attributes.length > 0) {
+				newLink.removeAttribute(newLink.attributes[0].name);
+			}
 
-	for (var i = 0; i < containers.length; ++i) {
-		var node = document.getElementById(containers[i]);
-		node.addEventListener("DOMNodeInserted", fixLinks);
-		fixLinks({relatedNode: node});
-	}
+			newLink.className = className;
 
-	containers = undefined;
-}, false);
+			if (link.href.indexOf("facebook.com/l.php") !== -1) {
+				var href = link.href.match(/l\.php?.*u=([^&]+)[&$]/)[1];
+				newLink.href = decodeURIComponent(href);
+			} else {
+				newLink.href = link.href;
+			}
 
-var selector = "a[onmousedown^='UntrustedLink']";
-
-function fixLinks(e) {
-	var aList = e.relatedNode.querySelectorAll(selector);
-	Array.prototype.slice.call(aList, 0).forEach(function(elem) {
-		elem.onmousedown = null;
+			newLink.target = link.target;
+			link.parentNode.replaceChild(newLink, link);
+		});
 	});
 }
 
-fixLinks({relatedNode: document});
+var containers = ["content", "pagelet_dock"];
+
+var observer = new MutationObserver(function(mutations) {
+	mutations.forEach(function(mutation) {
+		filterLinks(mutation.addedNodes);
+	});
+});
+
+var config = {
+	childList: true,
+	subtree : true,
+};
+
+for (var i = 0; i < containers.length; i++) {
+	var node = document.getElementById(containers[i]);
+	filterLinks([node]);
+	observer.observe(node, config);
+}
